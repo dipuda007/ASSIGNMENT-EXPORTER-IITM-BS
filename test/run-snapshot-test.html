@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>snapshot test</title>
+<style>body{background:#222;margin:0;padding:16px;font-family:Arial;color:#ddd}#out{margin-bottom:10px}</style>
+</head>
+<body><div id="out">running…</div>
+<script type="module">
+import { buildSnapshotPngBlob } from "../lib/snapshot.js";
+const GA6 = "__GA6_DATAURL__";
+const parsed = {
+  kind: "assessment", title: "Snapshot Test — image MCQ", submitted: false, scoreStatus: "hidden",
+  questions: [{
+    prompt: "Which of the following code segments will display the result given below?",
+    promptImages: [{ url: "img://ga6" }], promptCode: false, isMcq: true, multiple: true,
+    choices: [
+      { label: "A", text: "<!DOCTYPE html>\n<html>\n<a url=\"https://x\">Click here for more details</a>\n</html>", images: [], looksLikeCode: true },
+      { label: "B", text: "<!DOCTYPE html>\n<a href=\"https://x\">Click here</a> for more details", images: [], looksLikeCode: true }
+    ]
+  }]
+};
+try {
+  const map = new Map([["img://ga6", GA6]]);
+  const blob = await buildSnapshotPngBlob(parsed, map);
+  const im = new Image(); im.src = URL.createObjectURL(blob);
+  document.getElementById("out").textContent = "png bytes: " + blob.size;
+  document.body.appendChild(im);
+} catch (e) {
+  document.getElementById("out").textContent = "ERROR: " + (e && e.stack ? e.stack : e);
+}
+</script>
+</body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>parser test</title></head>
+<body><pre id="out">running…</pre>
+<script type="module">
+import { parseRecord, toMarkdown, collectImages } from "../lib/parser.js";
+import { classify, deriveFlags } from "../lib/classify.js";
+
+const data = {
+  is_submitted: false,
+  sections: [{ items: [{
+    instance_id: "x", kind: "question", weight: 3.0,
+    question: {
+      all_or_nothing_grading: false,
+      multiple_selections: true,
+      type: "mcq",
+      prompt: "Which of the following code segments will display the result given below?<br><br><img src=\"https://backend.seek.study.iitm.ac.in/21t3_cs2003/assets/img/GA6.PNG\" class=\"yui-img\"><br>",
+      choices: [
+        { id: "0", score: null, text: "<div>&lt;!DOCTYPE html&gt;</div><div>&lt;html&gt;</div><div>&lt;a url=\"https://onlinedegree.iitm.ac.in/\"&gt;Click here for</div><div>more details&lt;/a&gt;</div><div>&lt;/html&gt;</div>" },
+        { id: "1", score: null, text: "<div>&lt;!DOCTYPE html&gt;</div><div>&lt;a href=\"https://onlinedegree.iitm.ac.in/\"&gt;Click here&lt;/a&gt;</div><div>for more details</div>" }
+      ]
+    }
+  }]}]
+};
+const rec = { classify: classify(data), title: "Sample GA6 (image multi-select)", namespace: "ns_test", id: 999, data: data, flags: deriveFlags("assessment", data) };
+
+const out = [];
+out.push("classify => " + rec.classify);
+out.push("flags => " + JSON.stringify(rec.flags));
+const parsed = parseRecord(rec);
+out.push("images => " + JSON.stringify(collectImages(parsed)));
+out.push("=== MARKDOWN ===");
+out.push(toMarkdown(parsed));
+document.getElementById("out").textContent = out.join("\n");
+window.__done = true;
+</script>
+</body></html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment Copier</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">A</span>
+      <div class="brand-text">
+        <div class="title">Assignment&nbsp;Copier</div>
+        <div class="subtitle" id="subtitle">Waiting for a SEEK course…</div>
+      </div>
+    </div>
+    <button id="clear-btn" class="btn btn-danger" title="Delete all captured data from this extension">Clear data</button>
+  </header>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input id="search" class="search" placeholder="Search assignments…" autocomplete="off">
+    </div>
+    <select id="ns-select" class="ns-select" title="Course namespace"></select>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="chip active" data-filter="all">All</button>
+    <button class="chip" data-filter="assessment">MCQ</button>
+    <button class="chip" data-filter="programming">Code</button>
+  </div>
+
+  <main id="list" class="list"></main>
+
+  <section id="empty" class="empty">
+    <div class="x94-wrap">
+      <svg class="x94" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <text x="160" y="84" dy="0.34em" text-anchor="middle"
+              fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7">X94</text>
+      </svg>
+    </div>
+    <p class="empty-lead">Nothing here yet</p>
+    <ol class="steps">
+      <li>Go to your <b>dashboard</b> and choose your course</li>
+      <li>Click an <b>assignment</b> or <b>programming assignment</b></li>
+      <li>Assignment Copier shows it here automatically</li>
+    </ol>
+    <p class="empty-note">Working across courses? Just switch between them from the <b>top-right</b>.</p>
+  </section>
+
+  <footer class="footer">
+    <span id="count" class="count">0 captured</span>
+    <span class="brandmark">X94</span>
+  </footer>
+
+  <p class="empty-note" style="margin-top: -0.25rem; padding: 0 0.75rem 0.75rem; text-align: center; opacity: 0.8;">
+    Contributors: Ritik650, AbhiharRathore
+  </p>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <div id="detail" class="detail-overlay hidden">
+    <div class="detail-card">
+      <div class="detail-head">
+        <div id="detail-title" class="detail-title"></div>
+        <button id="detail-close" class="icon-btn" title="Close">✕</button>
+      </div>
+      <div id="detail-body" class="detail-body"></div>
+    </div>
+  </div>
+
+  <script src="../lib/jspdf.umd.min.js"></script>
+  <script type="module" src="panel.js"></script>
+</body>
+</html>

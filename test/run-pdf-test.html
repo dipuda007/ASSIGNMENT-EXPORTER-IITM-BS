@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>pdf test</title>
+<script src="../lib/jspdf.umd.min.js"></script>
+</head>
+<body><pre id="out">running…</pre>
+<script type="module">
+import { buildPdfBlob } from "../lib/pdf.js";
+
+const out = [];
+try {
+  const parsedMcq = {
+    kind: "assessment", title: "PDF Smoke MCQ", submitted: false, scoreStatus: "hidden",
+    questions: [{
+      prompt: "Which of the following code segments will display the result?",
+      promptImages: [{ url: "https://example.com/x.png" }], promptCode: false,
+      isMcq: true, multiple: true,
+      choices: [
+        { label: "A", text: "<!DOCTYPE html>\n<html>\n</html>", images: [], looksLikeCode: true },
+        { label: "B", text: "plain option text", images: [], looksLikeCode: false }
+      ]
+    }, {
+      prompt: "Type your answer below.", promptImages: [], promptCode: false,
+      isMcq: false, multiple: false, choices: []
+    }]
+  };
+  const blobMcq = buildPdfBlob(parsedMcq, new Map());
+  out.push("MCQ pdf blob: " + blobMcq.size + " bytes, type=" + blobMcq.type);
+
+  const parsedProg = {
+    kind: "programming", title: "PDF Smoke Prog", difficulty: "easy", scoreStatus: "hidden",
+    prompt: "Write a script.", promptImages: [],
+    languages: [{ language: "bash", prefixed_code: "script() {\n  echo hi\n}", code_template: "", uneditable_code: "}", suffixed_invisible_code: "", filename: "" }],
+    savedCode: { bash: null },
+    publicTests: [{ input: "1", output: "0", weight: 1.0 }]
+  };
+  const blobProg = buildPdfBlob(parsedProg, new Map());
+  out.push("PROG pdf blob: " + blobProg.size + " bytes, type=" + blobProg.type);
+  out.push("RESULT: " + ((blobMcq.size > 800 && blobProg.size > 800) ? "PASS" : "SUSPICIOUS"));
+} catch (e) {
+  out.push("ERROR: " + (e && e.stack ? e.stack : e));
+}
+document.getElementById("out").textContent = out.join("\n");
+</script>
+</body></html>

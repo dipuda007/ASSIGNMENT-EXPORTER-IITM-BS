@@ -1,0 +1,13 @@
+# build / share artifacts
+*.zip
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/
+.idea/
+
+# node (only used by the optional test harness)
+node_modules/
