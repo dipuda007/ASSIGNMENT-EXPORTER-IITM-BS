@@ -78,7 +78,4 @@ test/               headless render tests (not part of the extension runtime)
   so and never tries to recover it.
 - Private/hidden test cases are not fetched or bypassed.
 
-## Contributors
 
-- GitHub: [Ritik650](https://github.com/Ritik650)
-- GitHub: [AbhiharRathore](https://github.com/AbhiharRathore)
